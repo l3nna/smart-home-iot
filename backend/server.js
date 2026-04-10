@@ -12,6 +12,9 @@ app.get("/", (req, res) =>
     res.send("Backend is working");
 });
 
+// import routes
+const deviceRoutes = require("./routes/deviceRoutes");
+
 
 // start server
 
