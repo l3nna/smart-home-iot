@@ -82,23 +82,3 @@ This system is built using a modular architecture, where each component runs ind
 
 ---
 
-### Running the Project
-
-Each service must be started separately:
-
-#### Backend (API Server)
-```bash
-cd backend
-npm install
-node server.js
-
-#### Frontend (Dashboard)
-```bash
-cd frontend
-npm install
-npm start
-
-#### Hardware Layer (Raspberry Pi / Simulation)
-```bash
-cd hardware
-python main.py
