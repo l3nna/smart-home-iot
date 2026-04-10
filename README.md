@@ -70,15 +70,35 @@ React sends requests → Node.js processes → Python controls GPIO → Raspberr
 
 
 
-\## 🚀 Setup Instructions
+## Project Execution
 
+This system is built using a modular architecture, where each component runs independently and communicates through APIs and real-time events.
 
+###  System Layers
 
-\### 1. Install backend dependencies
+- **Frontend (React):** User interface dashboard
+- **Backend (Node.js):** API + real-time communication (WebSockets)
+- **Hardware Layer (Python):** Controls Raspberry Pi GPIO and sensors
 
+---
+
+### Running the Project
+
+Each service must be started separately:
+
+#### Backend (API Server)
 ```bash
-
 cd backend
-
 npm install
+node server.js
 
+#### Frontend (Dashboard)
+```bash
+cd frontend
+npm install
+npm start
+
+#### Hardware Layer (Raspberry Pi / Simulation)
+```bash
+cd hardware
+python main.py
