@@ -1,6 +1,6 @@
-const express = requre("express");
+const express = require("express");
 const router = express.Router();
-const { toggleLED } = require("../controllers/deviceControlller");
+const { toggleLED } = require("../controllers/deviceController");
 
 router.post("/led", toggleLED);
 
