@@ -1,5 +1,40 @@
 import { useEffect } from "react";
 
+class Particle {
+  constructor(colors) {
+    this.colors = colors;
+    this.reset(0, 0, 0, 0);
+  }
+
+  reset(x, y, speedX = 0, speedY = 0) {
+    this.x = x;
+    this.y = y;
+
+    this.size = Math.random() * 3 + 1.5;
+    this.color = this.colors[(Math.random() * this.colors.length) | 0];
+
+    this.speedX = speedX || (Math.random() - 0.5) * 1.5;
+    this.speedY = speedY || (Math.random() - 0.5) * 1.5;
+
+    this.life = 1;
+  }
+
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    this.life -= 0.02;
+  }
+
+  draw(ctx) {
+    ctx.globalAlpha = this.life;
+    ctx.fillStyle = this.color;
+
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
 function ParticleBackground() {
   useEffect(() => {
     const canvas = document.createElement("canvas");
@@ -27,57 +62,19 @@ function ParticleBackground() {
       "#ffe600",
       "#7c4dff",
       "#00ff6a",
-      "#ff7a00",
       "#ff00aa"
     ];
 
-    const MAX = 30; // 🔥 LOWER = smoother
+    const MAX = 60;
 
-    let particles = [];
+    const particles = [];
     let index = 0;
 
     let mouseX = 0;
     let mouseY = 0;
 
-    class Particle {
-      constructor() {
-        this.reset(0, 0);
-      }
-
-      reset(x, y) {
-        this.x = x;
-        this.y = y;
-
-        this.size = Math.random() * 3 + 1.5;
-
-        this.color = colors[(Math.random() * colors.length) | 0];
-
-        this.speedX = (Math.random() - 0.5) * 1.2;
-        this.speedY = (Math.random() - 0.5) * 1.2;
-
-        this.life = 1; // instead of opacity (FASTER)
-      }
-
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        this.life -= 0.02;
-      }
-
-      draw() {
-        ctx.globalAlpha = this.life;
-        ctx.fillStyle = this.color;
-
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    // pool
     for (let i = 0; i < MAX; i++) {
-      particles.push(new Particle());
+      particles.push(new Particle(colors));
     }
 
     const handleMouseMove = (e) => {
@@ -88,7 +85,26 @@ function ParticleBackground() {
       index = (index + 1) % MAX;
     };
 
+    const handleClick = (e) => {
+      const cx = e.clientX;
+      const cy = e.clientY;
+
+      const explosionCount = 15;
+
+      for (let i = 0; i < explosionCount; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 4 + 2;
+
+        const speedX = Math.cos(angle) * speed;
+        const speedY = Math.sin(angle) * speed;
+
+        particles[index].reset(cx, cy, speedX, speedY);
+        index = (index + 1) % MAX;
+      }
+    };
+
     window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("click", handleClick);
 
     const handleResize = () => {
       width = canvas.width = window.innerWidth;
@@ -100,19 +116,15 @@ function ParticleBackground() {
     function animate() {
       ctx.clearRect(0, 0, width, height);
 
-      // 🔥 IMPORTANT: reset alpha once per frame
-      ctx.globalAlpha = 1;
-
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
         p.update();
 
-        if (p.life <= 0) {
-          p.reset(mouseX, mouseY);
-        }
+      
+        if (p.life <= 0) continue;
 
-        p.draw();
+        p.draw(ctx);
       }
 
       requestAnimationFrame(animate);
@@ -122,6 +134,7 @@ function ParticleBackground() {
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("click", handleClick);
       window.removeEventListener("resize", handleResize);
       document.body.removeChild(canvas);
     };
