@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import "./App.css";
 
 const socket = io("http://localhost:3000");
 
 function App() {
-  const [temp, setTemp] = useState("No data");
+  const [temp, setTemp] = useState("Loading...");
   const [led, setLed] = useState(false);
 
   useEffect(() => {
@@ -17,10 +18,6 @@ function App() {
     });
   }, []);
 
-  const getTemp = () => {
-    socket.emit("get-temp");
-  };
-
   const toggleLED = () => {
     const newState = !led;
     socket.emit("led", newState.toString());
@@ -28,22 +25,30 @@ function App() {
   };
 
   return (
-    <div style={{ padding: 20, fontFamily: "Arial" }}>
-      <h1>🏠 Smart Home Dashboard</h1>
+    <div className="app">
+      <h1 className="title">🏠 Smart Home Dashboard</h1>
 
-      <h2>🌡 Temperature: {temp}</h2>
+      <div className="grid">
 
-      <button onClick={getTemp}>
-        Get Temperature
-      </button>
+        {/* TEMPERATURE CARD */}
+        <div className="card">
+          <h2>🌡 Temperature</h2>
+          <p className="value">{temp} °C</p>
+        </div>
 
-      <hr />
+        {/* LED CARD */}
+        <div className="card">
+          <h2>💡 Light Control</h2>
+          <p className="status">
+            Status: {led ? "ON" : "OFF"}
+          </p>
 
-      <h2>💡 LED: {led ? "ON" : "OFF"}</h2>
+          <button onClick={toggleLED} className="btn">
+            Toggle LED
+          </button>
+        </div>
 
-      <button onClick={toggleLED}>
-        Toggle LED
-      </button>
+      </div>
     </div>
   );
 }
