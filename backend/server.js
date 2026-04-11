@@ -1,25 +1,25 @@
 const express = require("express");
+const app = express();
 
-const app = express() ;
-
-// allow JSON
+const { runPython } = require("./services/pythonService");
 
 app.use(express.json());
 
-// test route
-app.get("/", (req, res) =>  
-{
-    res.send("Backend is working");
+app.get("/test-temp", async (req, res) => {
+  const temp = await runPython("temp");
+  res.json({ temperature: temp });
 });
 
-// import routes
-const deviceRoutes = require("./routes/deviceRoutes");
-
-
-// start server
-
-app.listen(3000, () => 
-{
-    console.log("Server running on port 3000");
+app.get("/test-led-on", async (req, res) => {
+  await runPython("led true");
+  res.send("LED ON triggered");
 });
-    
+
+app.get("/test-led-off", async (req, res) => {
+  await runPython("led false");
+  res.send("LED OFF triggered");
+});
+
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
+});
