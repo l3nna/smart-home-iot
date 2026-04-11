@@ -1,23 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:3000");
 
 function App() {
+  const [temp, setTemp] = useState("No data");
+  const [led, setLed] = useState(false);
+
+  useEffect(() => {
+    socket.on("temp-update", (data) => {
+      setTemp(data);
+    });
+
+    socket.on("led-update", (state) => {
+      setLed(state === "true");
+    });
+  }, []);
+
+  const getTemp = () => {
+    socket.emit("get-temp");
+  };
+
+  const toggleLED = () => {
+    const newState = !led;
+    socket.emit("led", newState.toString());
+    setLed(newState);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ padding: 20, fontFamily: "Arial" }}>
+      <h1>🏠 Smart Home Dashboard</h1>
+
+      <h2>🌡 Temperature: {temp}</h2>
+
+      <button onClick={getTemp}>
+        Get Temperature
+      </button>
+
+      <hr />
+
+      <h2>💡 LED: {led ? "ON" : "OFF"}</h2>
+
+      <button onClick={toggleLED}>
+        Toggle LED
+      </button>
     </div>
   );
 }
