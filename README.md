@@ -1,13 +1,13 @@
-Smart Home IoT System
+# Smart Home IoT System
 
 
-Overview
+# Overview
 
 A full-stack IoT Smart Home system that enables real-time control of devices and live sensor monitoring through a modern web dashboard.
 
 Built with a modular architecture combining web development and embedded systems with real-time communication.
 
-Features
+# Features
 Control devices (LED ON / OFF) from web interface
 Live sensor monitoring (temperature, humidity)
 Real-time updates using WebSockets
@@ -16,21 +16,21 @@ Modular and scalable system design
 Automation system (planned expansion)
 Tech Stack
 
-Frontend:
+# Frontend:
 
 React
 
-Backend:
+# Backend:
 
 Node.js (Express)
 Socket.io
 
-Hardware Layer:
+# Hardware Layer:
 
 Python
 Raspberry Pi GPIO control
 
-Communication:
+# Communication:
 
 REST API
 WebSockets
