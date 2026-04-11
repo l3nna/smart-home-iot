@@ -26,7 +26,7 @@ io.on("connection", (socket) => {
 
   socket.on("led", async (state) => {
     await runPython(`led ${state}`);
-    io.emit("led-update", state);
+    socket.emit("led-update", state);
   });
 });
 
