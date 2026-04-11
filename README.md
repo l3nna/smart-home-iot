@@ -1,35 +1,96 @@
 Smart Home IoT System
-Description
 
-A full-stack IoT smart home system that enables real-time control of devices and monitoring of sensor data through a web dashboard.
 
-The system combines web development and embedded systems using multiple technologies:
+Overview
 
-JavaScript (frontend and backend)
-Python (hardware control)
-Raspberry Pi (GPIO integration)
+A full-stack IoT Smart Home system that enables real-time control of devices and live sensor monitoring through a modern web dashboard.
+
+Built with a modular architecture combining web development and embedded systems with real-time communication.
+
 Features
-Control LED ON/OFF from a web interface
-Read sensor data (temperature, humidity)
+Control devices (LED ON / OFF) from web interface
+Live sensor monitoring (temperature, humidity)
 Real-time updates using WebSockets
-Full-stack dashboard
-Automation system (planned)
+Interactive full-stack dashboard
+Modular and scalable system design
+Automation system (planned expansion)
 Tech Stack
-Frontend: React
-Backend: Node.js (Express, Socket.io)
-Hardware: Python
-Device: Raspberry Pi
-Architecture
 
-Frontend → Backend → Python → Hardware
+Frontend:
 
-React sends requests to the Node.js backend, which processes the data and communicates with the Python hardware layer. Python controls GPIO on the Raspberry Pi to execute physical device actions.
+React
 
-Project Execution
+Backend:
 
-This system is built using a modular architecture where each component runs independently and communicates through APIs and real-time events.
+Node.js (Express)
+Socket.io
 
-System Layers
-Frontend (React): User interface for device control and monitoring
-Backend (Node.js): API layer and WebSocket server for real-time communication
-Hardware Layer (Python): Handles GPIO control and sensor data processing on Raspberry Pi
+Hardware Layer:
+
+Python
+Raspberry Pi GPIO control
+
+Communication:
+
+REST API
+WebSockets
+System Architecture
+[ React Frontend ]
+        ↓
+[ Node.js Backend (API + WebSockets) ]
+        ↓
+[ Python Hardware Layer ]
+        ↓
+[ Raspberry Pi GPIO ]
+        ↓
+[ Physical Devices (LEDs, Sensors) ]
+How It Works
+User interacts with the React dashboard
+Requests are sent to the Node.js backend
+Backend processes logic and handles WebSocket communication
+Python layer receives hardware commands
+Raspberry Pi executes GPIO actions
+Sensor data is streamed back to the UI in real time
+Project Design
+
+This system follows a modular separation-of-concerns architecture:
+
+Frontend handles UI only
+Backend handles logic and real-time communication
+Python handles hardware control
+Raspberry Pi executes physical device operations
+
+This ensures scalability, maintainability, and easy feature expansion.
+
+Future Improvements
+Mobile app integration
+AI-based automation rules
+Voice assistant integration (Alexa / Google Assistant)
+Cloud deployment
+Multi-room system support
+Getting Started
+# Clone repository
+git clone https://github.com/your-username/smart-home-iot
+
+# Install frontend
+cd frontend
+npm install
+npm start
+
+# Install backend
+cd backend
+npm install
+node server.js
+
+# Run hardware layer
+cd hardware
+python main.py
+Why This Project Stands Out
+
+This project demonstrates:
+
+Full-stack engineering skills
+Real-world IoT integration
+Real-time system architecture
+Hardware + software communication
+Production-level design thinking
