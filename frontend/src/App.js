@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import ParticleBackground from "./ParticleBackground";
 import "./App.css";
 
 const socket = io("http://localhost:3000");
@@ -26,6 +27,7 @@ function App() {
 
   return (
     <div className="app">
+      <ParticleBackground />
       <h1 className="title">🏠 Smart Home Dashboard</h1>
 
       <div className="grid">
