@@ -12,6 +12,10 @@ const io = new Server(server, {
 
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("Smart Home Backend is running 🚀");
+});
+
 io.on("connection", (socket) => {
   console.log("User connected");
 
