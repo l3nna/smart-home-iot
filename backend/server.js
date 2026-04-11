@@ -32,14 +32,10 @@ io.on("connection", (socket) => {
   console.log("✅ User connected:", socket.id);
 
   // 📡 FRONTEND REQUEST: GET TEMPERATURE
-  socket.on("get-temp", async () => {
-    try {
-      const temp = await runPython("temp");
-      socket.emit("temp-update", temp);
-    } catch (err) {
-      console.error("Temp error:", err);
-    }
-  });
+ setInterval(async () => {
+  const temp = await runPython("temp");
+  io.emit("temp-update", temp);
+}, 3000);
 
   // 💡 FRONTEND REQUEST: TOGGLE LED
   socket.on("led", async (state) => {
