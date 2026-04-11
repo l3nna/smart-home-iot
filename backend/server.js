@@ -1,25 +1,31 @@
 const express = require("express");
-const app = express();
+const http = require("http");
+const { Server } = require("socket.io");
 
 const { runPython } = require("./services/pythonService");
 
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: { origin: "*" }
+});
+
 app.use(express.json());
 
-app.get("/test-temp", async (req, res) => {
-  const temp = await runPython("temp");
-  res.json({ temperature: temp });
+io.on("connection", (socket) => {
+  console.log("User connected");
+
+  socket.on("get-temp", async () => {
+    const temp = await runPython("temp");
+    socket.emit("temp-update", temp);
+  });
+
+  socket.on("led", async (state) => {
+    await runPython(`led ${state}`);
+    io.emit("led-update", state);
+  });
 });
 
-app.get("/test-led-on", async (req, res) => {
-  await runPython("led true");
-  res.send("LED ON triggered");
-});
-
-app.get("/test-led-off", async (req, res) => {
-  await runPython("led false");
-  res.send("LED OFF triggered");
-});
-
-app.listen(3000, () => {
+server.listen(3000, () => {
   console.log("Server running on port 3000");
 });
