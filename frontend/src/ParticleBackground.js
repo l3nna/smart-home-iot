@@ -54,14 +54,14 @@ function ParticleBackground() {
     let height = (canvas.height = window.innerHeight);
 
     const colors = [
-      "#00fffc",
-      "#00fff0",
+      "#031989",
+      "#010d3a",
       "#46aff3",
-      "#f611ae",
-      "#ff3b3b",
-      "#ffe600",
-      "#7c4dff",
-      "#00ff6a",
+      "#114af6",
+      "#045c82",
+      "rgb(255, 255, 255)",
+      "#878787",
+      "#00355e",
       "#ff00aa"
     ];
 

@@ -28,19 +28,19 @@ function App() {
   return (
     <div className="app">
       <ParticleBackground />
-      <h1 className="title">🏠 Smart Home Dashboard</h1>
+      <h1 className="title"> Smart Home Dashboard</h1>
 
       <div className="grid">
 
         {/* TEMPERATURE CARD */}
         <div className="card">
-          <h2>🌡 Temperature</h2>
+          <h2> Temperature</h2>
           <p className="value">{temp} °C</p>
         </div>
 
         {/* LED CARD */}
         <div className="card">
-          <h2>💡 Light Control</h2>
+          <h2> Light Control</h2>
           <p className="status">
             Status: {led ? "ON" : "OFF"}
           </p>
